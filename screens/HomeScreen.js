@@ -1,13 +1,21 @@
 import { StatusBar } from 'expo-status-bar';
 import React, { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { StyleSheet, Text, View, Button, TouchableOpacity } from 'react-native';
 
 import CustomButton from '../components/CustomButton';
 import JokeCard from '../components/JokeCard';
-
+import * as jokeActions from '../store/actions/jokes';
 const HomeScreen = () => {
+    const currentJoke = useSelector(state => state.jokes.currentJoke)
+    const savedJokes = useSelector(state => state.jokes.savedJokes)
+    console.log(savedJokes)
+    const dispatch = useDispatch();
+
     const handleLaughButtonPress = () => {
         console.log("Pressed the laugh button")
+        dispatch(jokeActions.saveJoke(currentJoke));
+        dispatch(jokeActions.getNewJoke());
     }
 
     const handleLameButtonPress = () => {
@@ -16,11 +24,12 @@ const HomeScreen = () => {
 
     const handleNextJokeButtonPress = () => {
         console.log("Pressed the next joke button")
+        dispatch(jokeActions.getNewJoke());
     }
 
     return (
         <View style={styles.container}>
-            <JokeCard joke={{ setup: "test setup", punchline: "test punchline" }} />
+            <JokeCard joke={currentJoke} />
             <View style={styles.buttonContainer}>
                 <CustomButton text="😂" handlePress={handleLaughButtonPress} />
                 <CustomButton text="😑" handlePress={handleLameButtonPress} />

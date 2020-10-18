@@ -1,14 +1,17 @@
 import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { JokebookNavigator } from '../navigation/JokebookNavigator';
-import HomeScreen from '../screens/HomeScreen';
+import StartupScreen from '../screens/StartupScreen';
 import BookScreen from '../screens/BookScreen';
+import { useSelector } from 'react-redux';
 
 
 const AppNavigator = (props) => {
+    const didStartup = useSelector(state => state.jokes.didStartup);
     return (
         <NavigationContainer>
-            <JokebookNavigator />
+            { didStartup === false && <StartupScreen />}
+            { didStartup === true && <JokebookNavigator />}
         </NavigationContainer>
     )
 }

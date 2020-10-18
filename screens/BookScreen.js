@@ -1,26 +1,34 @@
 import { StatusBar } from 'expo-status-bar';
 import React, { useState } from 'react';
-import { StyleSheet, Text, View, Button, TouchableOpacity } from 'react-native';
+import { StyleSheet, Text, View, Button, TouchableOpacity, FlatList } from 'react-native';
+import { useDispatch, useSelector } from 'react-redux';
 
 import CustomButton from '../components/CustomButton';
 import JokeCard from '../components/JokeCard';
+import * as jokeActions from '../store/actions/jokes';
 
 const BookScreen = () => {
-    const handleLaughButtonPress = () => {
-        console.log("Pressed the laugh button")
-    }
+    const savedJokes = useSelector(state => state.jokes.savedJokes);
+    const dispatch = useDispatch();
 
-    const handleLameButtonPress = () => {
-        console.log("Pressed the lame button")
-    }
-
-    const handleNextJokeButtonPress = () => {
-        console.log("Pressed the next joke button")
+    const handleJokePress = (joke) => {
+        console.log("I Pressed delete")
+        dispatch(jokeActions.removeSavedJoke(joke));
     }
 
     return (
         <View style={styles.container}>
-            <Text>This is the book screen</Text>
+            <FlatList
+                data={savedJokes}
+                keyExtractor={(item) => item.punchline}
+                renderItem={({ item }) => (
+                    <View style={{ maxWidth: '80%' }}>
+                        <TouchableOpacity onPress={handleJokePress.bind(this, item)}>
+                            <JokeCard joke={item} />
+                        </TouchableOpacity>
+                    </View>
+                )}
+            />
         </View>
     );
 }
