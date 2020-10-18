@@ -1,5 +1,7 @@
 # Jokebook
 
+See the non-live coded (and better organized) version https://github.com/mslipenchuk267/jokebook_practice.
+
 Get random jokes pulled from https://github.com/15Dkatz/official_joke_api and save jokes you like for later.
 
 This is a simple RN app that is meant to showcase functional components, hooks, react-navigation, interacting with APIs, redux, redux-thunk, and async storage.
